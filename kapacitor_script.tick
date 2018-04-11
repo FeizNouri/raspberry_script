@@ -1,0 +1,24 @@
+dbrp "monitor"."autogen"
+
+stream 
+    |from()
+        .measurement('two_sec_kwh')
+        //.where(lambda: hour("time") > 8 AND hour("time") < 17 AND weekday("time") >= 1 AND weekday("time") <= 5) 
+    |alert()
+        .warn(lambda: "value_kWh" > 1)
+        .id('cogite_kWh on {{ index .Tags "measure_type" }}')
+        //.id('cogite_kWh')
+        .idTag('ID')
+        .levelTag('Level')
+        .message('alert!!!: {{ .ID }} level is {{ .Level }} on value:{{ index .Fields "value_kWh" }} at time:{{ index .Time }}')
+        .messageField('message') 
+        .stateChangesOnly()
+    |where(lambda: "ID" != '')
+    |where(lambda: "Level" != 'OK')
+    |httpPost('http://13.95.148.9:3000')
+    |influxDBOut()
+        .create()
+        .database('kapacitor')
+        .retentionPolicy('autogen')
+        .measurement('kwh')   
+

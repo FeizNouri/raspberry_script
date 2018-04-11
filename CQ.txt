@@ -1,0 +1,18 @@
+the four countinuous queries applied on database monitor:
+
+name: cq_6s
+query:
+CREATE CONTINUOUS QUERY cq_6s ON monitor BEGIN SELECT mean(value) INTO monitor.autogen.six_sec FROM monitor.autogen.two_sec GROUP BY measure_type, time(6s) END
+
+name: cq_6s_kwh
+query:
+CREATE CONTINUOUS QUERY cq_6s_kwh ON monitor BEGIN SELECT mean(value_kWh) INTO monitor.autogen.six_sec_kwh FROM monitor.autogen.two_sec_kwh GROUP BY measure_type, time(6s) END
+
+name: cq_5m
+query:
+CREATE CONTINUOUS QUERY cq_5m ON monitor BEGIN SELECT mean(value) INTO monitor.autogen.five_min FROM monitor.autogen.two_sec GROUP BY measure_type, time(5m) END
+
+name: cq_5m_kwh
+query:
+CREATE CONTINUOUS QUERY cq_5m_kwh ON monitor BEGIN SELECT mean(value_kWh) INTO monitor.autogen.five_min_kwh FROM monitor.autogen.two_sec_kwh GROUP BY measure_type, time(5m) END
+

@@ -3,7 +3,7 @@ import time
 import datetime
 import urllib2
 import requests
-import have_internet_fun
+import test_ping.py
 import os
 from requests.exceptions import ConnectionError
 import serial
@@ -89,7 +89,7 @@ while 1:
                         while 1:
                             i=1
                             while i<701:    
-                                w=have_internet_fun.have_internet()
+                                w=test_ping.have_internet()
                                 if w==1:
                                     raise Exception
                                 else:
